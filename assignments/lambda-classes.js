@@ -22,11 +22,17 @@ class Instructor extends Person {
         console.log(`Today we are learning about ${subject}`);
     }
     grade(student, subject) {
-        let scoreAdjustment = Math.round(Math.random() * (100 - student.grade));
-        if (Math.random()) {
-            student.grade = student.grade + scoreAdjustment;
+        let scoreAdjustmentAdd = Math.round(Math.random() * (100 - student.grade));
+        let scoreAdjustmentSubtract = Math.round(Math.random() * student.grade);
+
+        if (Math.random() >= 0.5) {
+            student.grade = student.grade + scoreAdjustmentAdd;
         } else {
-            student.grade = student.grade - scoreAdjustment;
+            student.grade = student.grade - scoreAdjustmentSubtract;
+
+            if (student.grade < 0) {
+                student.grade = 0;
+            }
         }
     
         console.log(`${student.name} receives a score of ${student.grade} on ${subject}`);
@@ -113,21 +119,25 @@ console.log('\n\Project Manager objects:\n')
 console.log(Giovanni);
 Giovanni.speak();
 Giovanni.demo('React');
-Giovanni.grade(Janessa, 'CSS');
 Giovanni.standUp('TLGroup');
 Giovanni.debugsCode(Janessa, 'JavaScript');
 console.log(Alessandra);
 Alessandra.speak();
 Alessandra.demo('Node.js');
-Alessandra.grade(Kora, 'Java');
 Alessandra.standUp('WEBPT11');
 Alessandra.debugsCode(Kora, 'React');
-
-
 Pace.grade(Janessa, 'JavaScript');
 Pietro.grade(Kora, 'HTML');
 
-console.log(Janessa.grade);
-Janessa.graduate();
-console.log(Kora.grade);
-Kora.graduate();
+do {
+    Giovanni.grade(Janessa, 'JavaScript');
+    Janessa.graduate();
+}
+while (Janessa.grade < 70);
+
+do {
+    console.log(Kora.grade);
+    Kora.graduate();
+    Alessandra.grade(Kora, 'HTML');
+}
+while (Kora.grade < 70);
